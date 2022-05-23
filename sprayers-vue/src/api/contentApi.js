@@ -1,11 +1,8 @@
 import Vue from 'vue'
 
 export default{
-    get_content_list(id){
-        if(id == null){
-            id = '';
-        }
-        return Vue.axios.get('/api/?id='+id);
+    get_content_list(obj){
+        return Vue.axios.post('/api/',obj);
     },
     submit_content(obj){
         return Vue.axios.post('/api/submit',obj);
@@ -24,5 +21,17 @@ export default{
     },
     get_like_by_id(id){
         return Vue.axios.get('/api/getLike?id='+id);
+    },
+    get_topic_top(){
+        return Vue.axios.get('/api/getTopicTop');
+    },
+    trends_topic(topic){
+        if(topic == null || topic == ''){
+            return;
+        }
+        return Vue.axios.get('/api/topic?topic='+topic);
+    },
+    insert_Topics(obj){
+        return Vue.axios.post('/api/insertTopic',obj);
     }
 }

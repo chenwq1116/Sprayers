@@ -6,47 +6,23 @@
     <div class="main-content">
       <router-view></router-view>
     </div>
-    <!-- <sprayers-side v-bind:title="title_HotTop">
-      <a class="main-group" v-for="(hotTop,index) in hotTops" :key="index" :href="'#'+hotTop.id">{{ ++index }}.{{ hotTop.name }}</a>
-    </sprayers-side> -->
+    <sprayers-side v-bind:title="title_HotTop">
+    </sprayers-side>
   </div>
 </template>
 
 <script>
-// import sprayersSide from '@/view/main/SprayersSide'
+import sprayersSide from '@/view/main/SprayersSide'
 
 export default {
   name: 'SprayersMain',
-  // components: {
-  //   sprayersSide
-  // },
+  components: {
+    sprayersSide
+  },
   data(){
     return {
       title_Group: 'Group',
-      title_HotTop: 'Hot Top',
-      groups: [{
-        name: 'china',
-        id: 'china'
-      },{
-        name: 'guangdong',
-        id: 'guangdong'
-      },{
-        name: 'zhuhai',
-        id: 'zhuhai'
-      },{
-        name: 'nfh',
-        id: 'nfh'
-      }],
-      hotTops: [{
-        name: '今天核酸了嘛',
-        id: '1'
-      },{
-        name: '今天核酸了嘛',
-        id: '1'
-      },{
-        name: '今天核酸了嘛',
-        id: '1'
-      }]
+      title_HotTop: 'Hot Topic'
     }
   }
 }
@@ -63,6 +39,7 @@ export default {
           width: 800px;
           display: flex;
           justify-content: center;
+          margin-right: 5px;
       }
     }
 </style>

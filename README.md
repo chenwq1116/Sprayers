@@ -49,3 +49,7 @@ install : https://www.mongodb.com/try/download/community
 install doc : https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/
 
 develop doc : https://www.mongodb.com/docs/manual/
+
+### High availability 
+#### 1. Replication
+#### 2. Sharding

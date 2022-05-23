@@ -10,7 +10,7 @@
 <script>
 import SprayersTextArea from '@/components/SprayersTextArea.vue'
 import SprayersBox from '@/components/SprayersBox.vue'
-import { mapState } from 'vuex'
+import { mapState,mapActions } from 'vuex'
 
 export default {
   name: 'ContentHome',
@@ -25,8 +25,26 @@ export default {
   },
   data(){
     return {
-      
     }
+  },
+  created() {
+    let contentReq = {
+      id: '',
+      topic: this.$route.params.topic
+    };
+    this.$watch(
+      () => this.$route.params,
+      toParams => {
+        contentReq.topic = toParams.topic;
+        this.getContentList(contentReq);   
+      }
+    );
+    this.getContentList(contentReq);
+  },
+  methods:{
+    ...mapActions({
+      getContentList: 'content/getContentList'
+    })
   }
 }
 </script>

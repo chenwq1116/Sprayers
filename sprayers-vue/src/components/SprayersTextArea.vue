@@ -34,6 +34,7 @@
 
 <script>
 import { mapActions,mapMutations } from 'vuex'
+import { analyse_topic } from '@/utils/util'
 
 export default {
     name: "SprayersTextArea",
@@ -84,7 +85,8 @@ export default {
         ...mapActions({
            submitContentActions: 'content/submitContent',
            getContentList: 'content/getContentList',
-           getContentByParentId: 'content/getContentByParentId'
+           getContentByParentId: 'content/getContentByParentId',
+           insertTopics: 'content/insertTopics'
         }),
         ...mapMutations({
             addContentList: 'content/addContentList',
@@ -147,20 +149,26 @@ export default {
                 alert(this.picturesSizeLimitErrorMsg);
                 return;
             }
+            const topics = analyse_topic(this.message);
             let data = {
                 content: this.message,
                 imgs: this.uploadFiles,
                 parentId: this.id,
-                createDate: new Date()
+                createDate: new Date(),
+                topics: topics
             }
             let that = this;
+            this.insertTopics(topics).catch( err=>{
+                if(err)console.log(err);
+            });
             this.submitContentActions(data).then(res =>{
                 if(res){
                     if(that.id.length > 0){
                         that.getContentByParentId(that.id);
                     }else{
-                        that.getContentList();
+                        that.getContentList({id:''});
                     }
+
                     that.message = '';
                     that.uploadFiles = [];
                 }

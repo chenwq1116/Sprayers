@@ -22,8 +22,6 @@ Vue.use(VueViewer);
 
 Vue.use(VueAxios, axios);
 
-store.dispatch('content/getContentList');
-
 new Vue({
   render: h => h(App),
   router: router,

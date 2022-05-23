@@ -1,14 +1,21 @@
 import contentApi from "@/api/contentApi";
 import { getPromiseAction,getPromiseActionNoMutations } from '@/utils/promiseUtil.js'
 import Vue from "vue";
+import { analyse_topic_to_html} from "@/utils/util";
 
 const state = {
     sprayersData: [],
-    sprayersComment:{}
+    sprayersComment:{},
+    topicTop:[]
 }
 
 const mutations = {
     getContentList(state,formObj){
+        let index;
+        for(index in formObj.data){
+            let sprayers = formObj.data[index];
+            sprayers.content = analyse_topic_to_html(sprayers.content);
+        }
         state.sprayersData = formObj.data;
     },
     addContentList(state,formObj){
@@ -26,16 +33,21 @@ const mutations = {
         }
         commentList.push(obj);
         Vue.set(state.sprayersComment,obj.parentId,commentList);
+    },
+    getTopicTop(state,formObj){
+        if(formObj){
+            state.topicTop = formObj.data;
+        }
     }
 }
 
 const actions = {
-    getContentList(context,id){
+    getContentList(context,obj){
         let commitCall = "getContentList";
-        if(id != null && id.length>0){
+        if(obj.id.length>0){
             commitCall = "addContentList";
         }
-        return getPromiseAction(contentApi.get_content_list(id),context,commitCall);
+        return getPromiseAction(contentApi.get_content_list(obj),context,commitCall);
     },
     submitContent(context,obj){
         return getPromiseActionNoMutations(contentApi.submit_content(obj));
@@ -49,11 +61,17 @@ const actions = {
     countCommentByParentId(context,id){
         return getPromiseActionNoMutations(contentApi.count_comment_by_parent_id(id));
     },
-    likeSubmit(content,id){
+    likeSubmit(context,id){
         return getPromiseActionNoMutations(contentApi.like_width_id(id));
     },
-    getLike(content,id){
+    getLike(context,id){
         return getPromiseActionNoMutations(contentApi.get_like_by_id(id));
+    },
+    getTopicTop(context){
+        return getPromiseAction(contentApi.get_topic_top(),context,'getTopicTop');
+    },
+    insertTopics(context,obj){
+        return getPromiseActionNoMutations(contentApi.insert_Topics(obj));
     }
     
 }

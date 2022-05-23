@@ -37,8 +37,14 @@
         } = event.target;
         if ((scrollTop + clientHeight) > (scrollHeight * 0.9) && this.loadData) {
           this.loadData = false;
-          const last_data = this.sprayersData[this.sprayersData.length-1];
-          this.getContentList(last_data._id).then(res =>{
+          let last_data = this.sprayersData[this.sprayersData.length-1];
+          if(last_data == null){
+            last_data = {
+              _id: ''
+            }
+          }
+          const toParams = this.$route.params;
+          this.getContentList({id:last_data._id,topic:toParams.topic}).then(res =>{
             if(res){
               this.loadData = true;
             }

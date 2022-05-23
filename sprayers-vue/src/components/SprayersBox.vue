@@ -4,8 +4,7 @@
             <p class="content-date">
                 {{ sprayersData.createDate | dateFormat_y_m_d_hm }}
             </p>
-            <p class="content-text">
-                {{ sprayersData.content }}
+            <p class="content-text" v-html="sprayersData.content">
             </p>
             <div class="content-img">
                 <viewer>
