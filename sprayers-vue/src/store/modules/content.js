@@ -1,12 +1,13 @@
 import contentApi from "@/api/contentApi";
 import { getPromiseAction,getPromiseActionNoMutations } from '@/utils/promiseUtil.js'
 import Vue from "vue";
-import { analyse_topic_to_html} from "@/utils/util";
+import { analyse_topic_to_html,analyse_note_to_html} from "@/utils/util";
 
 const state = {
     sprayersData: [],
     sprayersComment:{},
-    topicTop:[]
+    topicTop:[],
+    note:[]
 }
 
 const mutations = {
@@ -15,6 +16,7 @@ const mutations = {
         for(index in formObj.data){
             let sprayers = formObj.data[index];
             sprayers.content = analyse_topic_to_html(sprayers.content);
+            sprayers.content = analyse_note_to_html(sprayers.content);
         }
         state.sprayersData = formObj.data;
     },
@@ -37,6 +39,11 @@ const mutations = {
     getTopicTop(state,formObj){
         if(formObj){
             state.topicTop = formObj.data;
+        }
+    },
+    getNoteList(state,formObj){
+        if(formObj){
+            state.note = formObj.data;
         }
     }
 }
@@ -72,6 +79,12 @@ const actions = {
     },
     insertTopics(context,obj){
         return getPromiseActionNoMutations(contentApi.insert_Topics(obj));
+    },
+    insertNote(context,obj){
+        return getPromiseActionNoMutations(contentApi.insert_Note(obj));
+    },
+    getNoteList(context){
+        return getPromiseAction(contentApi.get_note_list(),context,'getNoteList');
     }
     
 }

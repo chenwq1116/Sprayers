@@ -18,8 +18,12 @@ router.post('/', function (req, res) {
     where_var._id = { "$lt": objectId(last_id) };
   }
   const topic = body.topic;
-  if (topic) {
-    where_var.content = { $regex: topic };
+  if (topic!=null) {
+    where_var.topics =  topic ;
+  }
+  const note = body.note;
+  if (note!=null) {
+    where_var.note =  note ;
   }
   console.log(where_var);
   content.find(where_var).limit(20).sort({ _id: -1 }).toArray(function (err, result) {
@@ -31,8 +35,18 @@ router.post('/', function (req, res) {
 router.post('/submit', function (req, res) {
   const data = req.body;
   const message = data.content.trim();
-  const imgs = data.imgs;
   let errorMsg = "";
+  if(data.note != null ){
+    const noteDirective = 'sprayer_admin_note';
+    const index = message.indexOf(noteDirective);
+    if(index == -1){
+      errorMsg = "use admin token pls";
+      res.status(500).send(errorMsg);
+      return;
+    }else{
+      data.content = message.slice(noteDirective.length,message.length);
+    }
+  }
   if (message.length >= 120) {
     errorMsg = "Message more than 120";
     res.status(500).send(errorMsg);
@@ -43,13 +57,14 @@ router.post('/submit', function (req, res) {
     res.status(500).send(errorMsg);
     return;
   }
+  const imgs = data.imgs;
   if (imgs.length > 9) {
     errorMsg = "Pictures more than 9";
     res.status(500).send(errorMsg);
     return;
   }
 
-  content.insertOne(req.body, (err, result) => {
+  content.insertOne(data, (err, result) => {
     if (err) throw err;
     res.sendStatus(200);
   });

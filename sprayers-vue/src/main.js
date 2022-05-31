@@ -15,12 +15,44 @@ import store from './store/index.js'
 
 import './filter.js'
 
+import VueCookies from 'vue-cookies'
+
+let loadData = true;
+window.onscroll = function (){
+  const {
+    scrollTop,
+    clientHeight,
+    scrollHeight
+  } = window.document.scrollingElement;
+  const sprayersData = store.getters.sprayersData;
+  if ((scrollTop + clientHeight) > (scrollHeight * 0.9) && loadData && sprayersData.length>=20) {
+    loadData = false;
+    let last_data = sprayersData[sprayersData.length-1];
+    if(last_data == null){
+      last_data = {
+        _id: ''
+      }
+    }
+    let toParams = '';
+    if(router.history.current.params.topic!=null){
+      toParams = router.history.current.params.topic;
+    }
+    let contentReq = {id:last_data._id,topic:toParams};
+    store.dispatch('content/getContentList',contentReq).then(res =>{
+      if(res){
+        loadData = true;
+      }
+    });
+  }
+}
 
 Vue.config.productionTip = false;
 Vue.use(VEmojiPicker);
 Vue.use(VueViewer);
 
 Vue.use(VueAxios, axios);
+
+Vue.use(VueCookies);
 
 new Vue({
   render: h => h(App),

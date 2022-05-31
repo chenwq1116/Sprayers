@@ -9,5 +9,10 @@ export default new Vuex.Store({
     },
     modules: {
         content
+    },
+    getters: {
+        sprayersData: () =>{
+            return content.state.sprayersData;
+        }
     }
 });

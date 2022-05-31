@@ -16,6 +16,11 @@ const routes = [
         name: 'topic',
         component: contentHome   
     },
+    {
+        path: '/note/:note',
+        name: 'note',
+        component: contentHome   
+    },
     { 
         path: '/info',
         name: 'info',

@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 require('dotenv').config(); 
 
 var indexRouter = require('./routes/index');
+var noteRouter = require('./routes/note');
 
 var app = express();
 
@@ -15,6 +16,7 @@ app.use(bodyParser.urlencoded({limit: "11mb",extended: true}));
 app.use(cookieParser());
 
 app.use('/api', indexRouter);
+app.use('/api/note', noteRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

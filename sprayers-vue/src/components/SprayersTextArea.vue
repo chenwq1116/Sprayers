@@ -34,7 +34,7 @@
 
 <script>
 import { mapActions,mapMutations } from 'vuex'
-import { analyse_topic } from '@/utils/util'
+import { analyse_topic,analyse_note } from '@/utils/util'
 
 export default {
     name: "SprayersTextArea",
@@ -86,7 +86,8 @@ export default {
            submitContentActions: 'content/submitContent',
            getContentList: 'content/getContentList',
            getContentByParentId: 'content/getContentByParentId',
-           insertTopics: 'content/insertTopics'
+           insertTopics: 'content/insertTopics',
+           insertNote: 'content/insertNote'
         }),
         ...mapMutations({
             addContentList: 'content/addContentList',
@@ -132,7 +133,6 @@ export default {
         },
         submitContent(){
             const msg = this.message.trim();
-            console.log(msg);
             if(msg.length<=0){
                 alert("Message is Empty");
                 return;
@@ -150,17 +150,16 @@ export default {
                 return;
             }
             const topics = analyse_topic(this.message);
+            const note = analyse_note(this.message);
             let data = {
                 content: this.message,
                 imgs: this.uploadFiles,
                 parentId: this.id,
                 createDate: new Date(),
-                topics: topics
-            }
+                topics: topics,
+                note: note
+            };
             let that = this;
-            this.insertTopics(topics).catch( err=>{
-                if(err)console.log(err);
-            });
             this.submitContentActions(data).then(res =>{
                 if(res){
                     if(that.id.length > 0){
@@ -171,6 +170,13 @@ export default {
 
                     that.message = '';
                     that.uploadFiles = [];
+                    console.log("topics="+topics+",note="+note);
+                    that.insertTopics(topics).catch( err=>{
+                        if(err)console.log(err);
+                    });
+                    that.insertNote(note).catch( err=>{
+                        if(err)console.log(err);
+                    });
                 }
             });
         }

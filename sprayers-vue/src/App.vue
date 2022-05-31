@@ -1,5 +1,5 @@
 <template>
-    <div class="app" @scroll="handleScroll($event)">
+    <div class="app">
     <sprayers-header/>
     <sprayers-main />
   </div>
@@ -8,49 +8,11 @@
 <script>
   import SprayersMain from '@/view/main/SprayersMain'
   import SprayersHeader from '@/view/header/SprayersHeader'
-  import { mapActions,mapState } from 'vuex'
   export default {
     name: 'App',
     components: {
       SprayersMain,
       SprayersHeader
-    },
-    computed:{
-        ...mapState({
-            sprayersData: state => state.content.sprayersData,
-        })
-    },
-    data(){
-      return {
-        loadData: true
-      }
-    },
-    methods:{
-      ...mapActions({
-        getContentList: 'content/getContentList',
-      }),
-      handleScroll(event) {
-        const {
-          scrollTop,
-          clientHeight,
-          scrollHeight
-        } = event.target;
-        if ((scrollTop + clientHeight) > (scrollHeight * 0.9) && this.loadData) {
-          this.loadData = false;
-          let last_data = this.sprayersData[this.sprayersData.length-1];
-          if(last_data == null){
-            last_data = {
-              _id: ''
-            }
-          }
-          const toParams = this.$route.params;
-          this.getContentList({id:last_data._id,topic:toParams.topic}).then(res =>{
-            if(res){
-              this.loadData = true;
-            }
-          });
-        }
-      }
     }
   }
 </script>
@@ -60,7 +22,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
-    overflow-y:scroll
+    min-width: 1100px;
+    // height: 100vh;
+    // overflow-y:scroll
   }
 </style>

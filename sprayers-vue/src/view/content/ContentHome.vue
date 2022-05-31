@@ -30,12 +30,14 @@ export default {
   created() {
     let contentReq = {
       id: '',
-      topic: this.$route.params.topic
+      topic: this.$route.params.topic,
+      note: this.$route.params.note,
     };
     this.$watch(
       () => this.$route.params,
       toParams => {
         contentReq.topic = toParams.topic;
+        contentReq.note = toParams.note;
         this.getContentList(contentReq);   
       }
     );

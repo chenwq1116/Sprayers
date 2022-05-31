@@ -1,0 +1,12 @@
+/* pages/main/main.wxss */
+.main {
+  background-color: #FFDEB4;
+  height: 100vh;
+}
+
+.main-box {
+  background-color: white;
+  height: 150rpx;
+  width: 80%;
+  
+}

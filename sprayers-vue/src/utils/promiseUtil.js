@@ -10,7 +10,11 @@ export function getPromiseAction(api,context,mutationsType){
 				reject(false);
 			}
 		},error=>{
-			reject(error);
+			const res = error.response;
+			if(res.status == 500){
+				alert(res.data);
+			}
+			reject(error.response);
 		})
 	});
 }
@@ -24,7 +28,11 @@ export function getPromiseActionNoMutations(api){
 				reject(res);
 			}
 		},error=>{
-			reject(error);
+			const res = error.response;
+			if(res.status == 500){
+				alert(res.data);
+			}
+			reject(error.response);
 		})
 	})
 }
