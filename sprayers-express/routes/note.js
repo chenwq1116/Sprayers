@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-var objectId = require('mongodb').ObjectId;
-
 
 var db = require('../db');
 const noteCollection = db.collection("note");

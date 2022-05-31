@@ -6,9 +6,6 @@ var objectId = require('mongodb').ObjectId;
 
 var db = require('../db');
 const content = db.collection("content");
-const likeCollection = db.collection("like");
-const topicCollection = db.collection("topic");
-
 /* GET home page. */
 router.post('/', function (req, res) {
   const body = req.body;
@@ -34,6 +31,7 @@ router.post('/', function (req, res) {
 
 router.post('/submit', function (req, res) {
   const data = req.body;
+  console.log(data);
   const message = data.content.trim();
   let errorMsg = "";
   if(data.note != null ){
@@ -66,7 +64,7 @@ router.post('/submit', function (req, res) {
 
   content.insertOne(data, (err, result) => {
     if (err) throw err;
-    res.sendStatus(200);
+    res.status(200).json(result);
   });
 
 });
@@ -96,87 +94,24 @@ router.get('/countComment', (req, res) => {
   })
 })
 
-router.get('/like', (req, res) => {
+router.get('/delete',(req,res)=>{
   const id = req.query.id;
-  likeCollection.findOne({ contentId: id }).then(result => {
-    if (result) {
-      ++result.sum;
-      likeCollection.updateOne({ _id: result._id }, { $set: { "sum": result.sum } }, (err, updateRes) => {
-        if (err) throw err;
-        res.status(200).json(updateRes.sum);
-      });
-    } else {
-      likeCollection.insertOne({
-        contentId: id,
-        sum: 1
-      }).then(result => {
-        res.status(200).json(result.sum);
-      });
-    }
-  });
-})
-
-router.get('/getLike', (req, res) => {
-  const id = req.query.id;
-  likeCollection.findOne({ contentId: id }).then(result => {
-    let sum = 0;
-    if (result) {
-      sum = result.sum;
-    }
-    res.status(200).json(sum);
-  });
-})
-
-router.get('/getTopicTop',(req,res) => {
-  topicCollection.find().limit(10).sort({ trends: -1 }).toArray(function (err, result) {
-    if (err) throw err;
-    res.status(200).json(result);
-  });
-});
-
-router.get('/topic',(req,res) =>{
-  const topic = req.query.topic;
-  console.log('topic:',topic);
-  topicCollection.findOne({name: topic}).then(result =>{
-    console.log(result);
-    if(result){
-      result.trends++;
-      const updateResult = topicCollection.updateOne({ name: result.name }, { $set: { "trends": result.trends } });
-      updateResult.catch(err=>{
-        console.log(err);
-      })
-    }
-    res.sendStatus(200);
+  content.findOne({_id:objectId(id)}).then(result =>{
+     const nowDate = new Date();
+     const createDate = new Date(result.createDate);
+     const expireTime = nowDate.getTime() - createDate.getTime();
+     if(result!=null && expireTime < 1000*60*3 ){
+        content.deleteOne({_id:objectId(result._id)}).then(resdel =>{
+          if(resdel){
+            res.sendStatus(200);
+          }
+        });
+     }else{
+       const error = 'More than expired time 3min!'
+       res.status(500).send(error);
+     }
   })
-});
-
-router.post('/insertTopic', (req, res) => {
-  const topics = req.body;
-  if (topics != null && topics.length > 0) {
-    var index;
-    for (index in topics) {
-      const topic = topics[index];
-      topicCollection.findOne({ name: topic }).then(result =>{
-        if (result) {
-          result.trends++;
-          console.log(result);
-          const updateResult = topicCollection.updateOne({ name: result.name }, { $set: { "trends": result.trends } });
-          updateResult.catch(err=>{
-            console.log(err);
-          })
-        } else {
-          const insertResult = topicCollection.insertOne({
-            name: topic,
-            trends: 1
-          });
-          insertResult.catch(err =>{
-            console.log(err);
-          })
-        }
-      });
-    }
-    res.sendStatus(200);
-  }
 })
+
 
 module.exports = router;

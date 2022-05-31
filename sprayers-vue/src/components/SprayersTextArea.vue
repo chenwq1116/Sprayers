@@ -35,6 +35,7 @@
 <script>
 import { mapActions,mapMutations } from 'vuex'
 import { analyse_topic,analyse_note } from '@/utils/util'
+import { setCookie } from '@/utils/cookiesUtil'
 
 export default {
     name: "SprayersTextArea",
@@ -167,7 +168,7 @@ export default {
                     }else{
                         that.getContentList({id:''});
                     }
-
+                    setCookie(res.data.insertedId,true);
                     that.message = '';
                     that.uploadFiles = [];
                     console.log("topics="+topics+",note="+note);
@@ -177,6 +178,7 @@ export default {
                     that.insertNote(note).catch( err=>{
                         if(err)console.log(err);
                     });
+                    
                 }
             });
         }

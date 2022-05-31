@@ -85,6 +85,9 @@ const actions = {
     },
     getNoteList(context){
         return getPromiseAction(contentApi.get_note_list(),context,'getNoteList');
+    },
+    contentDelete(context,id){
+        return getPromiseActionNoMutations(contentApi.content_delete(id));
     }
     
 }

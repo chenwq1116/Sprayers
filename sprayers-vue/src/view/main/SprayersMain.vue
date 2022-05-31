@@ -1,13 +1,13 @@
 <template>
   <div class="main">
     <sprayers-side v-bind:title="title_Note">
-      <a class="main-group" v-for="(note,index) in notes" :key="index" @click="toNoteContent(note.name)">{{ note.name }}</a>
+      <span class="main-group" v-for="(note,index) in notes" :key="index" @click="toNoteContent(note.name)">{{ note.name }}</span>
     </sprayers-side>
     <div class="main-content">
       <router-view></router-view>
     </div>
     <sprayers-side v-bind:title="title_HotTop">
-      <a class="main-group" v-for="(hotTop,index) in topicTop" :key="index" @click="toTopicContent(hotTop.name)">{{ hotTop.name }}</a>
+      <span class="main-group" v-for="(hotTop,index) in topicTop" :key="index" @click="toTopicContent(hotTop.name)">{{ hotTop.name }}</span>
     </sprayers-side>
   </div>
 </template>

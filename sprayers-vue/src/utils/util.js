@@ -37,7 +37,7 @@ export function analyse_topic(message){
 }
 
 export function analyse_note(message){
-    let patt = /\$[a-zA-Z0-9\u4e00-\u9fa5]*\$/;    
+    let patt = /\$[a-zA-Z0-9\u4e00-\u9fa5]*\$/g;    
     return analyse_msg(message,patt);
 }
 
