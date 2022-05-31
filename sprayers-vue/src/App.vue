@@ -22,8 +22,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 1100px;
-    // height: 100vh;
-    // overflow-y:scroll
+    min-width: 1290px;
   }
 </style>

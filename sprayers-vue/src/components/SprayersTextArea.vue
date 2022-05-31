@@ -207,8 +207,6 @@ export default {
                     padding-top: 10px;
                     padding-right: 10px;
                 }
-                .img-bottom{
-                }
 
                 .imgs-top{
                     position: absolute;
