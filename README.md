@@ -1,10 +1,10 @@
-# Sparyers
+# Sprayers
 
 >non-user project 
 >
 >every sprayer is create by yourself
 
-## Sparyers-vue
+## Sprayers-vue
 
 ### Compiles and minifies for production
 ```
@@ -12,11 +12,11 @@ yarn build
 ```
 out path `/dist` 
 
-## Sparyers-express
+## Sprayers-express
 
 
 
-## Sparyers-nginx
+## Sprayers-nginx
 
 >proxy for sprayers-vue and sprayers-express
 
@@ -41,7 +41,7 @@ check sprayers-express port with `/sparyers-express/.env`.
 }
 ```
 
-## Sparyers-mongoDB
+## Sprayers-mongoDB
 
 ### windows 
 install : https://www.mongodb.com/try/download/community
