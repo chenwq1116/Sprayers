@@ -1,5 +1,5 @@
 <template>
-  <div class="app" style="overflow-y:scroll;overflow-x:hidden;" @scroll="handleScroll($event)" v-loading="loading">
+  <div class="app" style="overflow-y:scroll;overflow-x:hidden;" @scroll="handleScroll($event)" v-loading.fullscreen.lock="loading">
     <!-- <sprayers-header/> -->
     <sprayers-main />
     <drag @handlepaly="handleaudioplay" style="cursor:pointer"></drag>
@@ -35,7 +35,7 @@ export default {
         scrollHeight
       } = e.srcElement;
       const sprayersData = this.$store.getters.sprayersData;
-      if ((scrollTop + clientHeight) > (scrollHeight * 0.9) && this.loadData && sprayersData.length >= 5) {
+      if ((scrollTop + clientHeight) > (scrollHeight * 0.95) && this.loadData && sprayersData.length >= 5) {
         this.loadData = false;
         this.loading = true;
         let last_data = sprayersData[sprayersData.length - 1];
