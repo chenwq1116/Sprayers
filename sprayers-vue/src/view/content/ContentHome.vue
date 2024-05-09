@@ -1,27 +1,31 @@
 <template>
   <div class="content-home">
     <div class="content-basic home-top">
-      <sprayers-text-area v-bind:submitType="'home'" />
+      <!-- <sprayers-text-area v-bind:submitType="'home'" /> -->
+      
     </div>
     <sprayers-box v-for="(data,index) in sprayersData" :key="index" v-bind:sprayersData="data" />
   </div>
 </template>
 
 <script>
-import SprayersTextArea from '@/components/SprayersTextArea.vue'
+// import SprayersTextArea from '@/components/SprayersTextArea.vue'
 import SprayersBox from '@/components/SprayersBox.vue'
 import { mapState,mapActions } from 'vuex'
 
 export default {
   name: 'ContentHome',
   components: {
-    SprayersTextArea,
-    SprayersBox
+    // SprayersTextArea,
+    SprayersBox,
+
   },
   computed:{
     ...mapState({
       sprayersData: state => state.content.sprayersData
     })
+ 
+
   },
   data(){
     return {
@@ -53,10 +57,10 @@ export default {
 
 <style lang="scss">
     .content-home{
-      width: 800px;
-
+      // width: 800px;
+      width: 100%;
       .home-top{
-        width: 800px;
+        // width: 800px;
         display: flex;
         justify-content: space-around;
       }

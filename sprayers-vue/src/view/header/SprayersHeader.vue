@@ -36,7 +36,7 @@ export default {
     .header{
         background-color: white;
         width: 100%;
-        min-width: 800px;
+        // min-width: 800px;
         height: 60px;
         display: flex;
         justify-content: center;
@@ -56,6 +56,7 @@ export default {
                 img{
                     width: 50px;
                     height: 50px;
+                    margin-left: 10px;
                 }
 
                 input{

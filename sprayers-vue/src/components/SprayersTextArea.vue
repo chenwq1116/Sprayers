@@ -1,5 +1,5 @@
 <template>
-    <div class="content-basic home-textArea">
+    <div class="content-basic home-textArea"  v-loading="loading">
         <textarea v-model="message" :maxlength="maxLengthLimit" @input="textMsg()" @change="textMsg()" v-on:keyup.enter.shift="submitContent()" ></textarea>
         <div class="home-img" v-show="uploadFiles.length > 0" >
             <div class="img" v-for="(uploadFile,index) in uploadFiles" v-bind:key="index">
@@ -8,7 +8,7 @@
             </div>
         </div>       
         <div class="home-bottom">
-            <div class="home-tool" v-if="submitType == 'home'">
+            <div class="home-tool" v-if="submitType != 'Transmit'">
                 <div class="tool-btn">
                     <div @click="isShowEmoji()">😃</div>
                     <VEmojiPicker @select="selectEmoji" v-show="isEmoji"/>  
@@ -18,7 +18,7 @@
                     📷
                 </div>
             </div>
-            <div class="home-tool" v-if="submitType != 'home'">
+            <div class="home-tool" v-if="submitType == 'Transmit'">
                 <div class="tool-btn">
                     <div @click="isShowEmoji()">😃</div>
                     <VEmojiPicker @select="selectEmoji" v-show="isEmoji"/>  
@@ -61,7 +61,8 @@ export default {
             picturesErrorMsg:'Pictures more than 9',
             messageErrorMsg:'Message more than 120',
             picturesSizeLimitErrorMsg:'Pictures more than 10m',
-            uploadSizeLimit: 10 * 1024
+            uploadSizeLimit: 10 * 1024,
+            loading: false
         }
     },
     computed:{
@@ -114,7 +115,8 @@ export default {
             var files = e.target.files;
             let index;
             for(index in files){
-                let file = files[index];
+                let file = files[index].file;
+                console.log(file);
                 var reader = new FileReader(); 
                 reader.readAsDataURL(file);
                 let url = "";
@@ -161,6 +163,7 @@ export default {
                 note: note
             };
             let that = this;
+            this.loading = true;
             this.submitContentActions(data).then(res =>{
                 if(res){
                     if(that.id.length > 0){
@@ -178,7 +181,8 @@ export default {
                     that.insertNote(note).catch( err=>{
                         if(err)console.log(err);
                     });
-                    
+                    this.loading = false;
+                    this.$router.push("/home");
                 }
             });
         }

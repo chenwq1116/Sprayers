@@ -2,12 +2,14 @@ import contentHome from './view/content/ContentHome'
 import contentInfo from './view/content/ContentInfo'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import contentApi from "@/api/contentApi";
+import SprayersTextArea from './components/SprayersTextArea'
+import PassWord from './view/main/PassWord.vue';
+
 
 Vue.use(VueRouter);
 const routes = [
     { 
-        path: '/',
+        path: '/home',
         name: 'home',
         component: contentHome 
     },
@@ -25,6 +27,16 @@ const routes = [
         path: '/info',
         name: 'info',
         component: contentInfo 
+    },
+    { 
+        path: '/text',
+        name: 'text',
+        component: SprayersTextArea 
+    },
+    {
+        path: '/',
+        name: 'pass',
+        component: PassWord
     }
 ];
 
@@ -33,11 +45,16 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to,from,next)=>{
-    if(to.name == 'topic'){
-        const topic = to.params.topic.replaceAll('#','%23');
-        contentApi.trends_topic(topic);
+    if(to.name == 'pass'){
+        next();
+    }else{
+        let md5 = sessionStorage.getItem('md5');
+        if(md5 == process.env.VUE_APP_MD5){
+            next();                
+        }else{
+            next("/");
+        }
     }
-    next();
 });
 
 export default router;

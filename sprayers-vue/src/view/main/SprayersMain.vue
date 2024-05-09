@@ -1,25 +1,25 @@
 <template>
   <div class="main">
-    <sprayers-side v-bind:title="title_Note">
+    <!-- <sprayers-side v-bind:title="title_Note" v-if="!isMobile">
       <span class="main-group" v-for="(note,index) in notes" :key="index" @click="toNoteContent(note.name)">{{ note.name }}</span>
-    </sprayers-side>
-    <div class="main-content">
+    </sprayers-side> -->
+    <div class="main-content"  >
       <router-view></router-view>
     </div>
-    <sprayers-side v-bind:title="title_HotTop">
+    <!-- <sprayers-side v-bind:title="title_HotTop" v-if="!isMobile">
       <span class="main-group" v-for="(hotTop,index) in topicTop" :key="index" @click="toTopicContent(hotTop.name)">{{ hotTop.name }}</span>
-    </sprayers-side>
+    </sprayers-side> -->
   </div>
 </template>
 
 <script>
-import sprayersSide from '@/view/main/SprayersSide'
+// import sprayersSide from '@/view/main/SprayersSide'
 import { mapActions,mapState } from 'vuex'
 
 export default {
   name: 'SprayersMain',
   components: {
-    sprayersSide
+    // sprayersSide
   },
   computed:{
     ...mapState({
@@ -30,12 +30,13 @@ export default {
   data(){
     return {
       title_Note: 'Note',
-      title_HotTop: 'Hot Topic'
+      title_HotTop: 'Hot Topic',
+      isMobile:false
     }
   },
   created: function(){
-      this.getTopicTop();
-      this.getNoteList();
+      // this.getTopicTop();
+      // this.getNoteList();
   },
   methods:{
     ...mapActions({
@@ -56,17 +57,18 @@ export default {
 
 <style lang="scss">
     .main{
-        margin-top: 10px;
-        min-width: 800px;
+        // margin-top: 10px;
+          width: 100%;
+        // min-width: 800px;
         display: flex;
         justify-content: center;
 
       .main-content{
-          width: 800px;
+          width: 100%;
           display: flex;
           justify-content: center;
-          margin-right: 5px;
-          margin-left: 5px;
+          // margin-right: 5px;
+          // margin-left: 5px;
       }
     }
 </style>

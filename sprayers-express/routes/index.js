@@ -15,15 +15,15 @@ router.post('/', function (req, res) {
     where_var._id = { "$lt": objectId(last_id) };
   }
   const topic = body.topic;
-  if (topic!=null) {
-    where_var.topics =  topic ;
+  if (topic != null) {
+    where_var.topics = topic;
   }
   const note = body.note;
-  if (note!=null) {
-    where_var.note =  note ;
+  if (note != null) {
+    where_var.note = note;
   }
   console.log(where_var);
-  content.find(where_var).limit(20).sort({ _id: -1 }).toArray(function (err, result) {
+  content.find(where_var).limit(6).sort({ _id: -1 }).toArray(function (err, result) {
     if (err) throw err;
     res.status(200).json(result);
   });
@@ -34,15 +34,15 @@ router.post('/submit', function (req, res) {
   console.log(data);
   const message = data.content.trim();
   let errorMsg = "";
-  if(data.note != null ){
+  if (data.note != null) {
     const noteDirective = 'sprayer_admin_note';
     const index = message.indexOf(noteDirective);
-    if(index == -1){
+    if (index == -1) {
       errorMsg = "use admin token pls";
       res.status(500).send(errorMsg);
       return;
-    }else{
-      data.content = message.slice(noteDirective.length,message.length);
+    } else {
+      data.content = message.slice(noteDirective.length, message.length);
     }
   }
   if (message.length >= 120) {
@@ -94,22 +94,22 @@ router.get('/countComment', (req, res) => {
   })
 })
 
-router.get('/delete',(req,res)=>{
+router.get('/delete', (req, res) => {
   const id = req.query.id;
-  content.findOne({_id:objectId(id)}).then(result =>{
-     const nowDate = new Date();
-     const createDate = new Date(result.createDate);
-     const expireTime = nowDate.getTime() - createDate.getTime();
-     if(result!=null && expireTime < 1000*60*3 ){
-        content.deleteOne({_id:objectId(result._id)}).then(resdel =>{
-          if(resdel){
-            res.sendStatus(200);
-          }
-        });
-     }else{
-       const error = 'More than expired time 3min!'
-       res.status(500).send(error);
-     }
+  content.findOne({ _id: objectId(id) }).then(result => {
+    const nowDate = new Date();
+    const createDate = new Date(result.createDate);
+    const expireTime = nowDate.getTime() - createDate.getTime();
+    if (result != null && expireTime < 1000 * 60 * 3) {
+      content.deleteOne({ _id: objectId(result._id) }).then(resdel => {
+        if (resdel) {
+          res.sendStatus(200);
+        }
+      });
+    } else {
+      const error = 'More than expired time 3min!'
+      res.status(500).send(error);
+    }
   })
 })
 

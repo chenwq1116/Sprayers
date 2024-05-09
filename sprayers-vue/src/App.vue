@@ -1,27 +1,69 @@
 <template>
-    <div class="app">
-    <sprayers-header/>
+  <div class="app" style="overflow-y:scroll;overflow-x:hidden;" @scroll="handleScroll($event)" v-loading="loading">
+    <!-- <sprayers-header/> -->
     <sprayers-main />
+    <drag @handlepaly="handleaudioplay" style="cursor:pointer"></drag>
   </div>
 </template>
 
 <script>
-  import SprayersMain from '@/view/main/SprayersMain'
-  import SprayersHeader from '@/view/header/SprayersHeader'
-  export default {
-    name: 'App',
-    components: {
-      SprayersMain,
-      SprayersHeader
+import SprayersMain from '@/view/main/SprayersMain'
+// import SprayersHeader from '@/view/header/SprayersHeader'
+import drag from "@/components/dragbase.vue";
+
+export default {
+  name: 'App',
+  components: {
+    SprayersMain,
+    drag
+    // SprayersHeader
+  },
+  data() {
+    return {
+      loadData: true,
+      loading: false
+    }
+  },
+  methods: {
+    handleaudioplay() {
+      this.$router.push('/text');
+    },
+    handleScroll(e) {
+      const {
+        scrollTop,
+        clientHeight,
+        scrollHeight
+      } = e.srcElement;
+      const sprayersData = this.$store.getters.sprayersData;
+      if ((scrollTop + clientHeight) > (scrollHeight * 0.9) && this.loadData && sprayersData.length >= 5) {
+        this.loadData = false;
+        this.loading = true;
+        let last_data = sprayersData[sprayersData.length - 1];
+        if (last_data == null) {
+          last_data = {
+            _id: ''
+          }
+        }
+        let contentReq = { id: last_data._id };
+        this.$store.dispatch('content/getContentList', contentReq).then(res => {
+          if (res) {
+            this.loadData = true;
+            this.loading = false;
+
+          }
+        });
+      }
     }
   }
+}
 </script>
 
-<style lang="scss">
-  .app {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 1290px;
-  }
+<style>
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
 </style>

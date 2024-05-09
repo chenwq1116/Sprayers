@@ -17,6 +17,12 @@ import './filter.js'
 
 import VueCookies from 'vue-cookies'
 
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+
+import md5 from 'js-md5';
+
+
 let loadData = true;
 window.onscroll = function (){
   const {
@@ -53,6 +59,8 @@ Vue.use(VueViewer);
 Vue.use(VueAxios, axios);
 
 Vue.use(VueCookies);
+Vue.use(ElementUI);
+Vue.prototype.$md5 = md5;
 
 new Vue({
   render: h => h(App),

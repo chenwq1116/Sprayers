@@ -2,7 +2,7 @@
     <div class="content-basic">
         <div class="box-bottom">
             <div :class="['bottom-btn','Comment'===active ? 'active' : '']" @click="isShowComment()">⌨️ {{ countComment }}</div>
-            <div class="bottom-btn" @click="likeToSubmit(id)">👍 {{ countLike }}</div>
+            <!-- <div class="bottom-btn" @click="likeToSubmit(id)">👍 {{ countLike }}</div> -->
         </div>
         <div class="box-comment" v-if="showComment">
             <sprayers-text-area v-bind:submitType="'Comment'===active ? 'Transmit' : 'Comment'" v-bind:id="id"></sprayers-text-area>
@@ -46,9 +46,9 @@ export default {
         this.countCommentByParentId(this.id).then(res =>{
             this.countComment = res.data;
         });
-        this.getLike(this.id).then(res =>{
-            this.countLike = res.data;
-        });
+        // this.getLike(this.id).then(res =>{
+        //     this.countLike = res.data;
+        // });
     },
     methods: {
         ...mapActions({
