@@ -22,6 +22,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 import md5 from 'js-md5';
 
+import Vant from 'vant';
+import 'vant/lib/index.css';
+
+Vue.use(Vant);
 
 let loadData = true;
 window.onscroll = function (){

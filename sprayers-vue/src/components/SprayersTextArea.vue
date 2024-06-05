@@ -3,27 +3,27 @@
         <textarea v-model="message" :maxlength="maxLengthLimit" @input="textMsg()" @change="textMsg()" v-on:keyup.enter.shift="submitContent()" ></textarea>
         <div class="home-img" v-show="uploadFiles.length > 0" >
             <div class="img" v-for="(uploadFile,index) in uploadFiles" v-bind:key="index">
-                <img class="img-bottom" :src="uploadFile.data"/>
-                <img src="del.png" class="imgs-top" @click="delImg(index)"/>
+                <van-image class="img-bottom" :src="uploadFile.data"/>
+                <van-image src="del.png" class="imgs-top" @click="delImg(index)"/>
             </div>
         </div>       
         <div class="home-bottom">
-            <div class="home-tool" v-if="submitType != 'Transmit'">
+            <div class="home-tool" >
                 <div class="tool-btn">
                     <div @click="isShowEmoji()">😃</div>
                     <VEmojiPicker @select="selectEmoji" v-show="isEmoji"/>  
                 </div>
-                <div class="tool-btn">
+                <div class="tool-btn" v-if="submitType != 'Transmit'">
                     <input @change="getFiles($event)" type="file" accept="image/*" class="input-file" multiple="true" />
                     📷
                 </div>
             </div>
-            <div class="home-tool" v-if="submitType == 'Transmit'">
+            <!-- <div class="home-tool" v-if="submitType == 'Transmit'">
                 <div class="tool-btn">
                     <div @click="isShowEmoji()">😃</div>
                     <VEmojiPicker @select="selectEmoji" v-show="isEmoji"/>  
                 </div>
-            </div>
+            </div> -->
             <div class="home-send">
                 <div> {{ maxlength }}/120</div>
                 <button type="button" class="comment-btn" @click="submitContent()">🗣</button>
@@ -115,7 +115,7 @@ export default {
             var files = e.target.files;
             let index;
             for(index in files){
-                let file = files[index].file;
+                let file = files[index];
                 console.log(file);
                 var reader = new FileReader(); 
                 reader.readAsDataURL(file);
