@@ -34,7 +34,6 @@
 
 <script>
 import { mapActions,mapMutations } from 'vuex'
-import { analyse_topic,analyse_note } from '@/utils/util'
 import { setCookie } from '@/utils/cookiesUtil'
 
 export default {
@@ -42,7 +41,7 @@ export default {
     props:{
         submitType:{
             type: String,
-            default: ''
+            default: 'Transmit'
         },
         id: {
             type: String,
@@ -152,15 +151,15 @@ export default {
                 alert(this.picturesSizeLimitErrorMsg);
                 return;
             }
-            const topics = analyse_topic(this.message);
-            const note = analyse_note(this.message);
+            // const topics = analyse_topic(this.message);
+            // const note = analyse_note(this.message);
             let data = {
                 content: this.message,
                 imgs: this.uploadFiles,
                 parentId: this.id,
-                createDate: new Date(),
-                topics: topics,
-                note: note
+                createDate: new Date()
+                // topics: topics,
+                // note: note
             };
             let that = this;
             this.loading = true;
@@ -174,15 +173,17 @@ export default {
                     setCookie(res.data.insertedId,true);
                     that.message = '';
                     that.uploadFiles = [];
-                    console.log("topics="+topics+",note="+note);
-                    that.insertTopics(topics).catch( err=>{
-                        if(err)console.log(err);
-                    });
-                    that.insertNote(note).catch( err=>{
-                        if(err)console.log(err);
-                    });
+                    // console.log("topics="+topics+",note="+note);
+                    // that.insertTopics(topics).catch( err=>{
+                    //     if(err)console.log(err);
+                    // });
+                    // that.insertNote(note).catch( err=>{
+                    //     if(err)console.log(err);
+                    // });
                     this.loading = false;
-                    this.$router.push("/home");
+                    if(this.submitType === 'Transmit'){
+                        this.$router.push("/home");
+                    }
                 }
             });
         }

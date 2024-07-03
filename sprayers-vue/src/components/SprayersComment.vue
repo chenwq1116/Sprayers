@@ -5,7 +5,7 @@
             <!-- <div class="bottom-btn" @click="likeToSubmit(id)">👍 {{ countLike }}</div> -->
         </div>
         <div class="box-comment" v-if="showComment">
-            <sprayers-text-area v-bind:submitType="'Comment'===active ? 'Transmit' : 'Comment'" v-bind:id="id"></sprayers-text-area>
+            <sprayers-text-area v-bind:submitType="'Comment'=== active ? 'Comment' : 'Transmit'" v-bind:id="id"></sprayers-text-area>
             <div class="comment-list">
                 <p class="content-list" v-for="(data,index) in sprayersComment[id]" :key="index">
                 {{ data.createDate | dateFormat_y_m_d_hm }}: {{ data.content }}
