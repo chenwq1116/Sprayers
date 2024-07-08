@@ -60,7 +60,7 @@ export default {
         isShowComment(){
             this.active = 'Comment';
             if(this.showComment){
-                this.active = '';
+                this.active = 'Transmit';
                 this.showComment = false;
             }else{
                 if(this.id.length>0){

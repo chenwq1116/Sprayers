@@ -41,5 +41,8 @@ export default{
     },
     content_delete(id){
         return axios.get('/api/delete/?id='+id);
+    },
+    count_docments(){
+        return axios.get('/api/countDocments');
     }
 }

@@ -88,6 +88,9 @@ const actions = {
     },
     contentDelete(context,id){
         return getPromiseActionNoMutations(contentApi.content_delete(id));
+    },
+    countDocments(context){
+        return getPromiseActionNoMutations(contentApi.count_docments(),context);
     }
     
 }

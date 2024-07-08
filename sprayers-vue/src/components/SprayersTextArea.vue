@@ -13,7 +13,7 @@
                     <div @click="isShowEmoji()">😃</div>
                     <VEmojiPicker @select="selectEmoji" v-show="isEmoji"/>  
                 </div>
-                <div class="tool-btn" v-if="submitType != 'Transmit'">
+                <div class="tool-btn" v-if="submitType == 'Transmit'">
                     <input @change="getFiles($event)" type="file" accept="image/*" class="input-file" multiple="true" />
                     📷
                 </div>

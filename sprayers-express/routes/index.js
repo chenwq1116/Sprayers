@@ -94,6 +94,12 @@ router.get('/countComment', (req, res) => {
   })
 })
 
+router.get('/countDocments',(req, res) =>{
+  content.countDocuments({}).then(result =>{
+    res.status(200).json(result);
+  })
+})
+
 router.get('/delete', (req, res) => {
   const id = req.query.id;
   content.findOne({ _id: objectId(id) }).then(result => {
