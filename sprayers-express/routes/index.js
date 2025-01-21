@@ -119,5 +119,20 @@ router.get('/delete', (req, res) => {
   })
 })
 
+router.get('/search', (req, res) => {
+  const text = req.query.text;
+  let where_var = {
+    parentId: '',
+    $or:[
+      {content: { $regex: text, $options: 'i' }},
+      {createDate: { $regex: text, $options: 'i' }}
+    ]
+  }
+  content.find(where_var).sort({ _id: -1 }).toArray((err, result) => {
+    if (err) throw err;
+    res.status(200).json(result);
+  })
+})
+
 
 module.exports = router;

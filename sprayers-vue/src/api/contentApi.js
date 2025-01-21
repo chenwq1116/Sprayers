@@ -44,5 +44,8 @@ export default{
     },
     count_docments(){
         return axios.get('/api/countDocments');
+    },
+    content_search(text){
+        return axios.get('/api/search/?text='+text);
     }
 }

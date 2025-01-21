@@ -21,3 +21,7 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+sprayers-mongoDB/like.json
+sprayers-mongoDB/content.json
+sprayers-mongoDB/content1202.json
+sprayers-mongoDB/like1202.json

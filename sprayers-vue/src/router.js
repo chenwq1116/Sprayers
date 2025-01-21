@@ -4,6 +4,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import SprayersTextArea from './components/SprayersTextArea'
 import PassWord from './view/main/PassWord.vue';
+import search from './components/search.vue'
 
 
 Vue.use(VueRouter);
@@ -37,6 +38,10 @@ const routes = [
         path: '/',
         name: 'pass',
         component: PassWord
+    },{
+        path: '/search',
+        name: 'search',
+        component: search
     }
 ];
 

@@ -3,6 +3,7 @@
     <!-- <sprayers-header/> -->
     <sprayers-main />
     <drag @handlepaly="handleaudioplay" style="cursor:pointer"></drag>
+    <drag @handlepaly="handleSearch" :distanceBottom=200 contentText="🔍" style="cursor:pointer"></drag>
   </div>
 </template>
 
@@ -27,6 +28,9 @@ export default {
   methods: {
     handleaudioplay() {
       this.$router.push('/text');
+    },
+    handleSearch() {
+      this.$router.push('/search');
     },
     handleScroll(e) {
       const {

@@ -1,11 +1,13 @@
 <template>
   <div ref="floatDrag" class="float-position" :style="{ left: left + 'px', top: top + 'px', zIndex: zIndex }"
     @touchmove.prevent @mousemove.prevent @mousedown="mouseDown" @mouseup="mouseUp">
-    ⌨️
+    {{ contentText }}
   </div>
+  
 </template>
 
 <script>
+
 export default {
   name: "DragBall",
   props: {
@@ -32,6 +34,10 @@ export default {
     value: {
       type: String,
       default: "悬浮球！"
+    },
+    contentText: {
+      type: String,
+      default: "⌨️"
     }
   },
 

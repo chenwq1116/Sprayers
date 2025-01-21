@@ -91,6 +91,9 @@ const actions = {
     },
     countDocments(context){
         return getPromiseActionNoMutations(contentApi.count_docments(),context);
+    },
+    contentSearch(context,text){
+        return getPromiseAction(contentApi.content_search(text),context,'getContentList');
     }
     
 }
